@@ -6,6 +6,8 @@ import { BottomNav } from "@/components/layout/BottomNav"
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] })
 
+import Script from "next/script"
+
 export const metadata: Metadata = {
   title: "Agro AI",
   description: "Telegram for farmers and agricultural businesses in Uzbekistan",
@@ -18,6 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uz" suppressHydrationWarning>
+      <head>
+        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
+      </head>
       <body className={`${inter.className} bg-background text-foreground antialiased min-h-screen pb-20`}>
         <TelegramProvider>
           {children}
