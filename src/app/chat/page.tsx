@@ -93,30 +93,36 @@ export default function ChatPage() {
       )}
 
       {/* Input Area */}
-      <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
-        <div className="flex items-end gap-2">
-          <div className="flex-1 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center p-1 border border-transparent focus-within:border-primary/30 transition-colors">
-            <button className="p-2 text-slate-400 hover:text-primary transition-colors">
-              <ImageIcon className="w-5 h-5" />
-            </button>
+      <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pb-safe">
+        <div className="flex items-end gap-2 max-w-3xl mx-auto">
+          <button className="p-3 text-slate-400 hover:text-primary transition-colors flex-shrink-0">
+            <ImageIcon className="w-6 h-6" />
+          </button>
+          
+          <div className="flex-1 bg-slate-100 dark:bg-slate-800 rounded-3xl flex items-center px-4 py-1 min-h-[48px]">
             <input 
               type="text" 
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               placeholder="Xabar yozing..." 
-              className="flex-1 bg-transparent border-none outline-none text-sm py-2 px-1 placeholder:text-slate-400"
+              className="flex-1 bg-transparent border-none outline-none text-[15px] py-2 placeholder:text-slate-400"
             />
-            <button className="p-2 text-slate-400 hover:text-primary transition-colors">
-              <Mic className="w-5 h-5" />
-            </button>
           </div>
+
           <button 
-            onClick={handleSend}
-            disabled={!input.trim()}
-            className="w-12 h-12 flex items-center justify-center bg-primary text-white rounded-full hover:bg-primary/90 transition-all disabled:opacity-50 disabled:scale-95 disabled:cursor-not-allowed flex-shrink-0 shadow-md"
+            onClick={input.trim() ? handleSend : undefined}
+            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all flex-shrink-0 shadow-sm ${
+              input.trim() 
+                ? "bg-primary text-white hover:bg-primary/90 hover:scale-105" 
+                : "bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700"
+            }`}
           >
-            <Send className="w-5 h-5 ml-1" />
+            {input.trim() ? (
+              <Send className="w-5 h-5 ml-1" />
+            ) : (
+              <Mic className="w-5 h-5" />
+            )}
           </button>
         </div>
       </div>
