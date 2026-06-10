@@ -7,15 +7,30 @@ const bot = process.env.TELEGRAM_BOT_TOKEN ? new Telegraf(process.env.TELEGRAM_B
 if (bot) {
   // Simple start command
   bot.start((ctx) => {
-    // Vercel app URL should be placed here, for now using a placeholder or local
-    const webAppUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sizning-saytingiz.vercel.app'
+    const webAppUrl = 'https://agro-ai.vercel.app'
     
     ctx.reply(
-      'Salom! Men Agro AI yordamchisiman. Ilovani ochish uchun quyidagi tugmani bosing:',
+      'Assalomu alaykum 🌱 Agro AI ga xush kelibsiz! Sizga qishloq xo‘jaligi va chorvachilik bo‘yicha yordam beraman.',
       {
         reply_markup: {
           inline_keyboard: [
-            [{ text: 'Agro AI Ilovasini Ochish 🌱', web_app: { url: webAppUrl } }]
+            [{ text: 'AGRO AI MASLAHATCHINI OCHISH', web_app: { url: webAppUrl } }]
+          ]
+        }
+      }
+    )
+  })
+
+  // Boshqa barcha yozuvlarga ham xuddi shu javobni berish (to'xtab qolmasligi uchun)
+  bot.on('message', (ctx) => {
+    const webAppUrl = 'https://agro-ai.vercel.app'
+    
+    ctx.reply(
+      'Assalomu alaykum 🌱 Agro AI ga xush kelibsiz! Sizga qishloq xo‘jaligi va chorvachilik bo‘yicha yordam beraman.',
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: 'AGRO AI MASLAHATCHINI OCHISH', web_app: { url: webAppUrl } }]
           ]
         }
       }
