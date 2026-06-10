@@ -7,10 +7,10 @@ const bot = process.env.TELEGRAM_BOT_TOKEN ? new Telegraf(process.env.TELEGRAM_B
 if (bot) {
   // Simple start command
   bot.start((ctx) => {
-    const webAppUrl = 'https://agro-ai.vercel.app'
+    const webAppUrl = 'https://agro-ai-three.vercel.app'
     
     ctx.reply(
-      'Assalomu alaykum 🌱 Agro AI ga xush kelibsiz! Sizga qishloq xo‘jaligi va chorvachilik bo‘yicha yordam beraman.',
+      '🌱 Agro AI ga xush kelibsiz! Sizga qishloq xo‘jaligi va chorvachilik bo‘yicha yordam beraman.',
       {
         reply_markup: {
           inline_keyboard: [
@@ -23,10 +23,10 @@ if (bot) {
 
   // Boshqa barcha yozuvlarga ham xuddi shu javobni berish (to'xtab qolmasligi uchun)
   bot.on('message', (ctx) => {
-    const webAppUrl = 'https://agro-ai.vercel.app'
+    const webAppUrl = 'https://agro-ai-three.vercel.app'
     
     ctx.reply(
-      'Assalomu alaykum 🌱 Agro AI ga xush kelibsiz! Sizga qishloq xo‘jaligi va chorvachilik bo‘yicha yordam beraman.',
+      '🌱 Agro AI ga xush kelibsiz! Sizga qishloq xo‘jaligi va chorvachilik bo‘yicha yordam beraman.',
       {
         reply_markup: {
           inline_keyboard: [
