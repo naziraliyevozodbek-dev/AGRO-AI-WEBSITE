@@ -1,8 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Clock, ChevronRight, MessageSquare, ScanSearch, History, Trash2, Calculator } from "lucide-react"
+import { Clock, ChevronRight, MessageSquare, ScanSearch, History, Calculator } from "lucide-react"
 import { supabase } from "@/lib/supabase"
+import { useTelegramUser } from "@/components/providers/TelegramProvider"
 
 type HistoryItem = {
   id: string
@@ -29,6 +30,7 @@ function formatDate(iso: string) {
 }
 
 export default function HistoryPage() {
+  const { user } = useTelegramUser()
   const [items, setItems] = useState<HistoryItem[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState("Barchasi")
@@ -36,10 +38,6 @@ export default function HistoryPage() {
   const filters = ["Barchasi", "Chat", "Tashxis", "Kalkulyator"]
 
   useEffect(() => {
-    const userId = typeof window !== 'undefined'
-      ? (window as any).Telegram?.WebApp?.initDataUnsafe?.user?.id?.toString() || null
-      : null
-
     const fetchHistory = async () => {
       try {
         let query = supabase
@@ -48,7 +46,7 @@ export default function HistoryPage() {
           .order("created_at", { ascending: false })
           .limit(50)
 
-        if (userId) query = query.eq("user_id", userId)
+        if (user?.id) query = query.eq("user_id", user.id.toString())
 
         const { data, error } = await query
         if (!error && data) setItems(data)
@@ -60,7 +58,7 @@ export default function HistoryPage() {
     }
 
     fetchHistory()
-  }, [])
+  }, [user])
 
   const filtered = filter === "Barchasi" ? items : items.filter(i => i.type === filter)
 

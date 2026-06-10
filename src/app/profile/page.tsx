@@ -1,36 +1,18 @@
 "use client"
 
-import { User, Settings, Crown, Bell, Globe, LogOut, ShieldAlert, ChevronRight, Camera } from "lucide-react"
+import { Settings, Crown, Bell, Globe, LogOut, ShieldAlert, ChevronRight } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useTelegramUser } from "@/components/providers/TelegramProvider"
 
 export default function ProfilePage() {
-  const [user, setUser] = useState<{ first_name: string; last_name?: string; username?: string; id?: number } | null>(null)
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null)
-  const [loadingPhoto, setLoadingPhoto] = useState(true)
+  const { user, photoUrl, isReady } = useTelegramUser()
 
-  useEffect(() => {
-    if (typeof window !== 'undefined' && (window as any).Telegram?.WebApp?.initDataUnsafe?.user) {
-      const tgUser = (window as any).Telegram.WebApp.initDataUnsafe.user
-      setUser(tgUser)
-
-      if (tgUser.id) {
-        fetch(`/api/user-photo?user_id=${tgUser.id}`)
-          .then(r => r.json())
-          .then(d => { if (d.photo_url) setPhotoUrl(d.photo_url) })
-          .catch(() => {})
-          .finally(() => setLoadingPhoto(false))
-      } else {
-        setLoadingPhoto(false)
-      }
-    } else {
-      setLoadingPhoto(false)
-    }
-  }, [])
-
-  const fullName = user ? `${user.first_name}${user.last_name ? ' ' + user.last_name : ''}`.trim() : "Mehmon"
-  const username = user?.username ? `@${user.username}` : "Telegram foydalanuvchi"
+  const fullName = user
+    ? `${user.first_name}${user.last_name ? ' ' + user.last_name : ''}`.trim()
+    : isReady ? "Mehmon" : "..."
+  const username = user?.username ? `@${user.username}` : isReady ? "Telegram foydalanuvchi" : ""
   const initial = fullName.charAt(0).toUpperCase()
+  const loadingPhoto = !isReady && !photoUrl
 
   const menuItems = [
     { icon: Globe, label: "Til", value: "O'zbek", color: "bg-blue-50 text-blue-500", href: null },

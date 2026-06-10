@@ -3,10 +3,13 @@
 import { useState, useRef, useEffect } from "react"
 import { Send, Image as ImageIcon, Mic, ArrowLeft, Bot } from "lucide-react"
 import Link from "next/link"
+import { useTelegramUser } from "@/components/providers/TelegramProvider"
 
 type Message = { role: "user" | "ai"; content: string }
 
 export default function ChatPage() {
+  const { user } = useTelegramUser()
+
   const [messages, setMessages] = useState<Message[]>([
     { role: "ai", content: "Assalomu alaykum! Men Agro AI man. Qishloq xo'jaligi yoki chorvachilik bo'yicha qanday yordam bera olaman?" }
   ])
@@ -35,9 +38,7 @@ export default function ChatPage() {
     setIsLoading(true)
 
     try {
-      const tgUserId = typeof window !== 'undefined'
-        ? (window as any).Telegram?.WebApp?.initDataUnsafe?.user?.id?.toString() || "guest"
-        : "guest"
+      const tgUserId = user?.id?.toString() ?? "guest"
 
       const res = await fetch("/api/chat", {
         method: "POST",
