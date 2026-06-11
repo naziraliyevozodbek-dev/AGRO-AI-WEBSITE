@@ -4,37 +4,30 @@ import { Telegraf } from 'telegraf'
 // Initialize bot if token exists
 const bot = process.env.TELEGRAM_BOT_TOKEN ? new Telegraf(process.env.TELEGRAM_BOT_TOKEN) : null
 
+const WELCOME_TEXT = '🌱 Agro AI ga xush kelibsiz! Sizga qishloq xo\u2019zaligi va chorvachilik bo\u2019yicha yordam beraman.'
+const APP_URL = 'https://agro-ai-three.vercel.app'
+
 if (bot) {
-  // Simple start command
+  // /start command
   bot.start(async (ctx) => {
-    const webAppUrl = 'https://agro-ai-three.vercel.app'
-    
-    await ctx.reply(
-      '🌱 Agro AI ga xush kelibsiz! Sizga qishloq xo‘jaligi va chorvachilik bo‘yicha yordam beraman.',
-      {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: 'AGRO AI MASLAHATCHINI OCHISH', web_app: { url: webAppUrl } }]
-          ]
-        }
+    await ctx.reply(WELCOME_TEXT, {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🌿 AGRO AI MASLAHATCHINI OCHISH', url: APP_URL }]
+        ]
       }
-    )
+    })
   })
 
-  // Boshqa barcha yozuvlarga ham xuddi shu javobni berish (to'xtab qolmasligi uchun)
+  // Barcha boshqa xabarlarga ham bir xil javob
   bot.on('message', async (ctx) => {
-    const webAppUrl = 'https://agro-ai-three.vercel.app'
-    
-    await ctx.reply(
-      '🌱 Agro AI ga xush kelibsiz! Sizga qishloq xo‘jaligi va chorvachilik bo‘yicha yordam beraman.',
-      {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: 'AGRO AI MASLAHATCHINI OCHISH', web_app: { url: webAppUrl } }]
-          ]
-        }
+    await ctx.reply(WELCOME_TEXT, {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🌿 AGRO AI MASLAHATCHINI OCHISH', url: APP_URL }]
+        ]
       }
-    )
+    })
   })
 }
 
@@ -45,7 +38,6 @@ export async function POST(req: Request) {
   
   try {
     const body = await req.json()
-    // Process the update with Telegraf
     await bot.handleUpdate(body)
     return NextResponse.json({ ok: true })
   } catch (error) {
@@ -54,7 +46,6 @@ export async function POST(req: Request) {
   }
 }
 
-// Security: Check token in URL params or headers in production
 export async function GET() {
   return NextResponse.json({ status: 'Webhook is running. Bot token: ' + (bot ? 'Set' : 'Missing') })
 }
