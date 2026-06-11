@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     }
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-1.5-flash",
       contents: [
         "You are Agro AI, a helpful, professional agricultural assistant for farmers in Uzbekistan. Reply in Uzbek. Keep it concise.",
         ...messages.map((m: any) => `${m.role === 'user' ? 'User:' : 'Agro AI:'} ${m.content}`)
