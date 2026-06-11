@@ -58,7 +58,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Stats row */}
-      <div className="mx-4 -mt-6 grid grid-cols-3 gap-3 mb-4">
+      <div className="mx-4 -mt-6 grid grid-cols-3 gap-3 mb-4 relative z-10">
         {[
           { label: "Konsultatsiya", value: "12" },
           { label: "Tashxislar", value: "5" },

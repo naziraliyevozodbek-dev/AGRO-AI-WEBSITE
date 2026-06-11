@@ -143,7 +143,7 @@ export default function Home() {
       </div>
 
       {/* ── Cards area — overlaps hero ── */}
-      <div className="px-4 -mt-10 space-y-3.5">
+      <div className="px-4 -mt-10 space-y-3.5 relative z-10">
 
         {/* Water Efficiency */}
         <div className="bg-white rounded-3xl p-4 shadow-sm border border-slate-100">
